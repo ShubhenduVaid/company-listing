@@ -18,10 +18,13 @@
     <div *ngIf="isLoading" class="spinner">
       <mat-spinner></mat-spinner>
     </div>
+    <div *ngIf="isValidSearchInit && searchResults.length === 0" class="no-result">
+      <p>No Matched Companies Found !</p>
+    </div>
   </div>
 </div>
 
-<div *ngIf="searchResults.length > 0" class="search-results-container" >
+<div *ngIf="!isLoading && searchResults.length > 0" class="search-results-container" >
   <h2>Search Results</h2>
   <mat-list>
     <mat-list-item *ngFor="let company of searchResults | paginate: { itemsPerPage: 5, currentPage: currentPage }">

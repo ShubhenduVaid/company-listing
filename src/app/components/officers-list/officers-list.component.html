@@ -1,1 +1,24 @@
-<p>officers-list works!</p>
+<div *ngIf="isLoading" class="spinner">
+    <mat-spinner></mat-spinner>
+</div>
+<div *ngIf="!isLoading && companyDetail">
+    <div class="company-detail-container">
+        <h1>{{ companyDetail.title }}</h1>
+        <div class="company-detail-item">
+            <p>Company Number</p>
+            <p><strong>{{ companyDetail.company_number }}</strong></p>
+        </div>
+    </div>
+</div>
+<div *ngIf="!isLoading && officers.length > 0" class="officer-results-container">
+    <h1>Officers</h1>
+    <mat-list>
+        <mat-list-item *ngFor="let officer of officers | paginate: { itemsPerPage: 5, currentPage: currentPage }">
+            <div class="officer-detail-item">
+                <p><strong>{{officer.name | titlecase}}</strong></p>
+                <p>{{ officer.officer_role | titlecase}}</p>
+            </div>
+        </mat-list-item>
+    </mat-list>
+    <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+</div>

@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: calc(100vh - 42px);
   }
 
   .search-container-result {
@@ -73,6 +73,10 @@
   .mat-spinner {
     width: 20px;
     height: 20px;
+  }
+
+  .no-result {
+    margin: 20px;
   }
 
   .search-results-container {

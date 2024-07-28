@@ -1,0 +1,45 @@
+.spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.company-detail-container {
+    margin: 20px;
+}
+
+.company-detail-container > .company-detail-item {
+    padding: 10px
+}
+
+.company-detail-container > h1 {
+    font-size: 24px;
+}
+
+.company-detail-container > .company-detail-item > p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.officer-results-container {
+    flex-direction: column;
+    justify-content: start;
+    width: 100%;
+    height: 100%;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.officer-results-container > h1 {
+    font-size: 24px;
+    margin: 0px !important;
+}
+
+.officer-detail-item {
+    padding-top: 20px;
+}
+
+.mat-mdc-list-item, .mat-mdc-list-option {
+    height: fit-content !important;
+}

@@ -1,29 +1,29 @@
 .spinner {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 
-  .company-detail-container {
-    margin: 20px;
-  }
+.company-detail-container {
+  margin: 20px;
+}
 
-  .company-detail-container > .company-detail-item {
-    padding: 10px
-  }
-  
-  .company-detail-container > h1 {
-    font-size: 24px;
-  }
-  
-  .company-detail-container > .company-detail-item > p {
-    font-size: 16px;
-    margin: 5px 0;
-  }
-  
-  .company-detail-container > .company-detail-item > a {
-    color: blue;
-    text-decoration: underline;
-    cursor: pointer;
-  }
+.company-detail-container > .company-detail-item {
+  padding: 10px
+}
+
+.company-detail-container > h1 {
+  font-size: 24px;
+}
+
+.company-detail-container > .company-detail-item > p {
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+.company-detail-container > .company-detail-item > a {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
