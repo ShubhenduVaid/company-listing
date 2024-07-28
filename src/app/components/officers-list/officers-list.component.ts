@@ -3,6 +3,8 @@ import { ActivatedRoute } from "@angular/router";
 
 import { CompanyService } from "../../services/company.service";
 import { SharedModule } from "../../shared.module";
+import { CompanyItem, CompanySearchResponse } from "../../models/company.model";
+import { Officer, OfficersSearchResponse } from "../../models/officer.model";
 
 @Component({
   selector: "app-officers-list",
@@ -12,8 +14,8 @@ import { SharedModule } from "../../shared.module";
   styleUrl: "./officers-list.component.css",
 })
 export class OfficersListComponent implements OnInit {
-  companyDetail: any = {};
-  officers: any[] = [];
+  companyDetail: CompanyItem | null = null;
+  officers: Officer[] = [];
   isLoading: boolean = true;
   currentPage: number = 1;
 
@@ -26,8 +28,8 @@ export class OfficersListComponent implements OnInit {
     const companyNumber = this.route.snapshot.paramMap.get("companyNumber");
     if (companyNumber) {
       this.companyService.searchCompanies(companyNumber).subscribe({
-        next: (data) => {
-          this.companyDetail = data?.items[0] ?? {};
+        next: (data: CompanySearchResponse) => {
+          this.companyDetail = data?.items[0] ?? null;
           this.isLoading = false;
         },
         error: (error) => {
@@ -36,7 +38,7 @@ export class OfficersListComponent implements OnInit {
         },
       });
       this.companyService.getCompanyOfficers(companyNumber).subscribe({
-        next: (data) => {
+        next: (data: OfficersSearchResponse) => {
           this.officers = data?.items ?? [];
           this.isLoading = false;
         },

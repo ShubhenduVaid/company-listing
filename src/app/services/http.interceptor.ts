@@ -19,12 +19,12 @@ export class HttpInterceptorService implements HttpInterceptor {
 
     return next.handle(req).pipe(
       tap({
-        next: (event) => {
+        next: (event: HttpEvent<any>) => {
           if (event instanceof HttpResponse) {
             console.log("Response:", event);
           }
         },
-        error: (error) => {
+        error: (error: any) => {
           console.error("Error:", error);
         },
       })

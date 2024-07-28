@@ -3,6 +3,9 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { catchError, Observable, throwError } from "rxjs";
 import { Cacheable } from "ts-cacheable";
 
+import { CompanySearchResponse } from "../models/company.model";
+import { OfficersSearchResponse } from "../models/officer.model";
+
 @Injectable({
   providedIn: "root",
 })
@@ -13,17 +16,25 @@ export class CompanyService {
   constructor(private http: HttpClient) {}
 
   @Cacheable({ maxAge: 100000 })
-  searchCompanies(query: string): Observable<any> {
+  searchCompanies(query: string): Observable<CompanySearchResponse> {
     const url = `${this.apiUrl}/Search?Query=${query}`;
     const headers = new HttpHeaders().set("x-api-key", this.apiKey);
-    return this.http.get(url, { headers }).pipe(catchError(this.handleError));
+
+    return this.http
+      .get<CompanySearchResponse>(url, { headers })
+      .pipe(catchError(this.handleError));
   }
 
   @Cacheable({ maxAge: 100000 })
-  getCompanyOfficers(companyNumber: string): Observable<any> {
+  getCompanyOfficers(
+    companyNumber: string
+  ): Observable<OfficersSearchResponse> {
     const url = `${this.apiUrl}/Officers?CompanyNumber=${companyNumber}`;
     const headers = new HttpHeaders().set("x-api-key", this.apiKey);
-    return this.http.get(url, { headers });
+
+    return this.http
+      .get<OfficersSearchResponse>(url, { headers })
+      .pipe(catchError(this.handleError));
   }
 
   private handleError(error: any): Observable<never> {

@@ -35,10 +35,22 @@ describe("OfficersListComponent", () => {
     ) as jasmine.SpyObj<CompanyService>;
 
     companyService.searchCompanies.and.returnValue(
-      of({ items: [{ name: "Company1", id: "12345" }] })
+      of({
+        items: [
+          {
+            description: "Company1",
+            company_number: "12345",
+            title: "Company1",
+          },
+        ],
+        total_results: 1,
+      })
     );
     companyService.getCompanyOfficers.and.returnValue(
-      of({ items: [{ name: "Officer1" }, { name: "Officer2" }] })
+      of({
+        items: [{ name: "Officer1" }, { name: "Officer2" }],
+        items_per_page: 1,
+      })
     );
   });
 
@@ -51,7 +63,11 @@ describe("OfficersListComponent", () => {
 
     expect(companyService.searchCompanies).toHaveBeenCalledWith("12345");
     expect(companyService.getCompanyOfficers).toHaveBeenCalledWith("12345");
-    expect(component.companyDetail).toEqual({ name: "Company1", id: "12345" });
+    expect(component.companyDetail).toEqual({
+      description: "Company1",
+      company_number: "12345",
+      title: "Company1",
+    });
     expect(component.officers).toEqual([
       { name: "Officer1" },
       { name: "Officer2" },
@@ -66,7 +82,7 @@ describe("OfficersListComponent", () => {
     fixture.detectChanges();
 
     expect(companyService.searchCompanies).toHaveBeenCalledWith("12345");
-    expect(component.companyDetail).toEqual({});
+    expect(component.companyDetail).toEqual(null);
     expect(component.isLoading).toBeFalse();
   });
 

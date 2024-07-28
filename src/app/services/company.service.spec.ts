@@ -26,7 +26,11 @@ describe("CompanyService", () => {
 
   it("should call searchCompanies and return data", () => {
     const mockResponse = {
-      results: [{ name: "Company1" }, { name: "Company2" }],
+      items: [
+        { description: "Company1", company_number: "12345", title: "Company1" },
+        { description: "Company2", company_number: "12344", title: "Company2" },
+      ],
+      total_results: 1,
     };
     const query = "test";
     const url = `/api/Search?Query=${query}`;
@@ -80,7 +84,8 @@ describe("CompanyService", () => {
   it("should call getCompanyOfficers and return data", () => {
     const companyNumber = "12345";
     const mockResponse = {
-      officers: [{ name: "Officer1" }, { name: "Officer2" }],
+      items: [{ name: "Officer1" }, { name: "Officer2" }],
+      items_per_page: 1,
     };
     const url = `/api/Officers?CompanyNumber=${companyNumber}`;
 

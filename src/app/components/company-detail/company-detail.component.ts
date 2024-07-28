@@ -3,6 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 
 import { CompanyService } from "../../services/company.service";
 import { SharedModule } from "../../shared.module";
+import { CompanyItem, CompanySearchResponse } from "../../models/company.model";
 
 @Component({
   selector: "app-company-detail",
@@ -12,7 +13,7 @@ import { SharedModule } from "../../shared.module";
   styleUrl: "./company-detail.component.css",
 })
 export class CompanyDetailComponent implements OnInit {
-  companyDetail: any = {};
+  companyDetail: CompanyItem | null = null;
   isLoading: boolean = true;
 
   constructor(
@@ -24,8 +25,8 @@ export class CompanyDetailComponent implements OnInit {
     const companyNumber = this.route.snapshot.paramMap.get("companyNumber");
     if (companyNumber) {
       this.companyService.searchCompanies(companyNumber).subscribe({
-        next: (data) => {
-          this.companyDetail = data?.items[0] ?? {};
+        next: (data: CompanySearchResponse) => {
+          this.companyDetail = data?.items[0] ?? null;
           this.isLoading = false;
         },
         error: (error) => {

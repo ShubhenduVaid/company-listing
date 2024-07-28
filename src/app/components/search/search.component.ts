@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 
 import { CompanyService } from "../../services/company.service";
 import { SharedModule } from "../../shared.module";
+import { CompanyItem, CompanySearchResponse } from "../../models/company.model";
 
 @Component({
   selector: "app-search",
@@ -12,10 +13,10 @@ import { SharedModule } from "../../shared.module";
 })
 export class SearchComponent {
   searchQuery: string = "";
-  searchResults: any[] = [];
+  searchResults: CompanyItem[] = [];
   isLoading: boolean = false;
   currentPage: number = 1;
-  isValidSearchInit = false;
+  isValidSearchInit: boolean = false;
 
   constructor(private companyService: CompanyService) {}
 
@@ -24,11 +25,11 @@ export class SearchComponent {
       this.isValidSearchInit = true;
       this.isLoading = true;
       this.companyService.searchCompanies(this.searchQuery).subscribe({
-        next: (data) => {
+        next: (data: CompanySearchResponse) => {
           this.searchResults = data?.items ?? [];
           this.isLoading = false;
         },
-        error: (error) => {
+        error: (error: any) => {
           console.error(error);
           this.isLoading = false;
         },

@@ -44,7 +44,11 @@ describe("SearchComponent", () => {
 
   it("should set isValidSearchInit to true and isLoading to false when onSearch is called with valid searchQuery", async () => {
     const mockResponse = {
-      items: [{ name: "Company1" }, { name: "Company2" }],
+      items: [
+        { description: "Company1", company_number: "12345", title: "Company1" },
+        { description: "Company2", company_number: "12344", title: "Company2" },
+      ],
+      total_results: 1,
     };
     companyService.searchCompanies.and.returnValue(of(mockResponse));
     component.searchQuery = "test query";
@@ -60,7 +64,11 @@ describe("SearchComponent", () => {
 
   it("should update searchResults and set isLoading to false on successful search", async () => {
     const mockResponse = {
-      items: [{ name: "Company1" }, { name: "Company2" }],
+      items: [
+        { description: "Company1", company_number: "12345", title: "Company1" },
+        { description: "Company2", company_number: "12344", title: "Company2" },
+      ],
+      total_results: 1,
     };
     companyService.searchCompanies.and.returnValue(of(mockResponse));
     component.searchQuery = "test query";
