@@ -1,23 +1,63 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { of, throwError } from "rxjs";
+import { ActivatedRoute } from "@angular/router";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
-import { CompanyDetailComponent } from './company-detail.component';
+import { CompanyDetailComponent } from "./company-detail.component";
+import { CompanyService } from "../../services/company.service";
 
-describe('CompanyDetailComponent', () => {
+describe("CompanyDetailComponent", () => {
   let component: CompanyDetailComponent;
   let fixture: ComponentFixture<CompanyDetailComponent>;
+  let companyService: jasmine.SpyObj<CompanyService>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [CompanyDetailComponent]
-    })
-    .compileComponents();
+  beforeEach(() => {
+    const companyServiceSpy = jasmine.createSpyObj("CompanyService", [
+      "searchCompanies",
+    ]);
+    const routeStub = {
+      snapshot: { paramMap: new Map([["companyNumber", "12345"]]) },
+    } as unknown as ActivatedRoute;
+
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule, CompanyDetailComponent],
+      providers: [
+        { provide: CompanyService, useValue: companyServiceSpy },
+        { provide: ActivatedRoute, useValue: routeStub },
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CompanyDetailComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    companyService = TestBed.inject(
+      CompanyService
+    ) as jasmine.SpyObj<CompanyService>;
+
+    companyService.searchCompanies.and.returnValue(
+      of({ items: [{ name: "Company1", id: "12345" }] })
+    );
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
+  });
+
+  it("should initialize companyDetail based on companyNumber route parameter", () => {
+    fixture.detectChanges();
+
+    expect(companyService.searchCompanies).toHaveBeenCalledWith("12345");
+    expect(component.companyDetail).toEqual({ name: "Company1", id: "12345" });
+    expect(component.isLoading).toBeFalse();
+  });
+
+  it("should handle errors and set isLoading to false", () => {
+    companyService.searchCompanies.and.returnValue(
+      throwError(() => new Error("Server error"))
+    );
+    fixture.detectChanges();
+
+    expect(companyService.searchCompanies).toHaveBeenCalledWith("12345");
+    expect(component.companyDetail).toEqual({});
+    expect(component.isLoading).toBeFalse();
   });
 });

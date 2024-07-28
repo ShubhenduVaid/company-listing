@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 
-import { CompanyService } from '../../services/company.service';
-import { SharedModule } from '../../shared.module';
+import { CompanyService } from "../../services/company.service";
+import { SharedModule } from "../../shared.module";
 
 @Component({
-  selector: 'app-company-detail',
+  selector: "app-company-detail",
   standalone: true,
   imports: [SharedModule],
-  templateUrl: './company-detail.component.html',
-  styleUrl: './company-detail.component.css',
+  templateUrl: "./company-detail.component.html",
+  styleUrl: "./company-detail.component.css",
 })
 export class CompanyDetailComponent implements OnInit {
-  companyDetail: any;
+  companyDetail: any = {};
   isLoading: boolean = true;
 
   constructor(
@@ -21,11 +21,11 @@ export class CompanyDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const companyNumber = this.route.snapshot.paramMap.get('companyNumber');
+    const companyNumber = this.route.snapshot.paramMap.get("companyNumber");
     if (companyNumber) {
       this.companyService.searchCompanies(companyNumber).subscribe({
         next: (data) => {
-          this.companyDetail = data?.items[0];
+          this.companyDetail = data?.items[0] ?? {};
           this.isLoading = false;
         },
         error: (error) => {

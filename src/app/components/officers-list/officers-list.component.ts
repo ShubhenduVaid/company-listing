@@ -12,8 +12,8 @@ import { SharedModule } from "../../shared.module";
   styleUrl: "./officers-list.component.css",
 })
 export class OfficersListComponent implements OnInit {
-  companyDetail: any;
-  officers: any;
+  companyDetail: any = {};
+  officers: any[] = [];
   isLoading: boolean = true;
   currentPage: number = 1;
 
@@ -27,7 +27,7 @@ export class OfficersListComponent implements OnInit {
     if (companyNumber) {
       this.companyService.searchCompanies(companyNumber).subscribe({
         next: (data) => {
-          this.companyDetail = data?.items[0];
+          this.companyDetail = data?.items[0] ?? {};
           this.isLoading = false;
         },
         error: (error) => {
@@ -37,7 +37,7 @@ export class OfficersListComponent implements OnInit {
       });
       this.companyService.getCompanyOfficers(companyNumber).subscribe({
         next: (data) => {
-          this.officers = data?.items;
+          this.officers = data?.items ?? [];
           this.isLoading = false;
         },
         error: (error) => {
