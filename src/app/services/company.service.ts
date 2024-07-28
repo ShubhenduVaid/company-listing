@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { catchError, Observable, throwError } from "rxjs";
+import { Cacheable } from "ts-cacheable";
 
 @Injectable({
   providedIn: "root",
@@ -11,12 +12,14 @@ export class CompanyService {
 
   constructor(private http: HttpClient) {}
 
+  @Cacheable({ maxAge: 100000 })
   searchCompanies(query: string): Observable<any> {
     const url = `${this.apiUrl}/Search?Query=${query}`;
     const headers = new HttpHeaders().set("x-api-key", this.apiKey);
     return this.http.get(url, { headers }).pipe(catchError(this.handleError));
   }
 
+  @Cacheable({ maxAge: 100000 })
   getCompanyOfficers(companyNumber: string): Observable<any> {
     const url = `${this.apiUrl}/Officers?CompanyNumber=${companyNumber}`;
     const headers = new HttpHeaders().set("x-api-key", this.apiKey);
