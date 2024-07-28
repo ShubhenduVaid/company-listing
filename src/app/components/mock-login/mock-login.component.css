@@ -1,0 +1,7 @@
+.mock-login-container {
+    display: flex;
+    justify-content: right;
+    align-items: right;
+    height: auto;
+    padding: 5px
+}

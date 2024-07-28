@@ -1,0 +1,31 @@
+<div *ngIf="isLoading" class="spinner">
+    <mat-spinner></mat-spinner>
+</div>
+<div *ngIf="!isLoading && companyDetail">
+    <div class="company-detail-container">
+        <h1>{{ companyDetail.title }}</h1>
+        <div class="company-detail-item">
+            <p>Company Number</p>
+            <p><strong>{{ companyDetail.company_number }}</strong></p>
+        </div>
+        <div class="company-detail-item">
+            <p>Registered Office Address</p>
+            <p><strong>{{ companyDetail.address_snippet }}</strong></p>
+        </div>
+        <div class="company-detail-item">
+            <p>Company Status</p>
+            <p><strong>{{ companyDetail.company_status | titlecase }}</strong></p>
+        </div>
+        <div class="company-detail-item">
+            <p>Company Type</p>
+            <p><strong>{{ companyDetail.company_type | titlecase }}</strong></p>
+        </div>
+        <div class="company-detail-item">
+            <p>Incorporated On</p>
+            <p><strong>{{ companyDetail.date_of_creation | date:'dd MMMM yyyy' }}</strong></p>
+        </div>
+        <div class="company-detail-item">
+            <a [routerLink]="['/company', companyDetail.company_number, 'officers']">List Officers</a>
+        </div>
+    </div>
+</div>

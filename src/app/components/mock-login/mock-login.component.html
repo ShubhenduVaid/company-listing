@@ -1,0 +1,7 @@
+<div class="mock-login-container">
+    <mat-slide-toggle 
+        (change)="onToggle($event)" 
+        [checked]="isAuth">
+            {{ isAuth ? 'Authenticated' : 'Not Authenticated' }}
+    </mat-slide-toggle>
+</div>
